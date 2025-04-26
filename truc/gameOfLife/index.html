@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jeu de la vie</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>POC : Le jeu de la vie</h1>
+    <div class="sidebar">
+      <button id="simple-btn">Draw Tool</button>
+      <button id="the-ants-btn">The Ants</button>
+      <button id="lwss-btn">LWSS</button>
+      <button id="hwss-btn">HWSS</button>
+    </div>
+
+    <div class="controls">
+      <button id="start-btn">Lancer</button>
+      <button id="pause-btn">Pause</button>
+      <button id="next-frame-btn">Frame suivante</button>
+    </div>
+
+    <div class="grid" id="grid-container"></div>
+    <footer>
+      <p>
+        © <span id="current-year"></span> Maxime Jaconelli |
+        <a href="https://github.com/maxime-jcnl" target="_blank">GitHub</a>
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

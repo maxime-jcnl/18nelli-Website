@@ -1,0 +1,162 @@
+body {
+  font-family: "Comfortaa", sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(100, 7px);
+  grid-template-rows: repeat(100, 7px);
+  gap: 1px;
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sidebar {
+  position: fixed;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-family: "Comfortaa", sans-serif;
+}
+
+.sidebar button:hover {
+  background-color: #e0e0e0;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.controls button {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  transition: background-color 0.3s;
+  font-family: "Comfortaa", sans-serif;
+}
+
+.controls button:hover {
+  background-color: #e0e0e0;
+}
+
+.cell-empty,
+.cell-full,
+.cell-preview {
+  width: 10px;
+  height: 10px;
+  border: 1px solid lightgray;
+  box-sizing: border-box;
+}
+
+.cell-preview {
+  opacity: 0.5;
+}
+
+.cell-empty {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+}
+
+.cell-full {
+  background-color: black;
+}
+
+footer {
+  text-align: center;
+  padding: 5px;
+  height: 30px;
+  color: #000000;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+footer a {
+  color: #00acee;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Thème sombre */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #f1f1f1;
+  }
+
+  h1 {
+    color: #f1f1f1;
+  }
+
+  .sidebar button,
+  .controls button {
+    background-color: #333;
+    color: #f1f1f1;
+    border: 1px solid #555;
+  }
+
+  .sidebar button:hover,
+  .controls button:hover {
+    background-color: #444;
+  }
+
+  .cell-empty {
+    background-color: #1e1e1e;
+    border: 1px solid #555;
+  }
+
+  .cell-full {
+    background-color: #f1f1f1;
+  }
+
+  footer {
+    color: #f1f1f1;
+  }
+
+  footer a {
+    color: #00acee;
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  }
+}
