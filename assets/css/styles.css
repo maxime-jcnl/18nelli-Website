@@ -315,9 +315,7 @@ html, body {
 }
 .album-ico {
   /* on place la transition ici, pas dans :hover */
-  display: block;        /* Évite les espaces blancs sous l’image */
-  max-width: 20%;       /* Au plus 100% de la largeur du parent */
-  height: auto;          /* Hauteur calculée pour garder le ratio */
+  
   transition: 
     transform 0.3s ease-in-out,
     filter    0.3s ease-in-out;
@@ -330,4 +328,18 @@ html, body {
     drop-shadow(0 0 4px rgba(255, 0, 0, 0.8))
     /* halo plus large */
     drop-shadow(0 0 12px rgba(255, 0, 0, 0.6));
+}
+
+.banner-truc {
+  display: block;        /* Évite les espaces blancs sous l’image */
+  max-width: 20%;       /* Au plus 100% de la largeur du parent */
+  height: auto;          /* Hauteur calculée pour garder le ratio */
+  transition: none;
+  filter: invert(0);
+  
+}
+.banner-truc:hover {
+  filter: 
+  invert(1) contrast(20000%) saturate(200%);
+
 }
