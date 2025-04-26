@@ -313,3 +313,18 @@ html, body {
   border-radius: 0.2em;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
 }
+.album-ico {
+  /* on place la transition ici, pas dans :hover */
+  transition: 
+    transform 0.3s ease-in-out,
+    filter    0.3s ease-in-out;
+}
+
+.album-ico:hover {
+  transform: scale(1.1);
+  filter:
+    /* contour fin */
+    drop-shadow(0 0 4px rgba(255, 0, 0, 0.8))
+    /* halo plus large */
+    drop-shadow(0 0 12px rgba(255, 0, 0, 0.6));
+}
