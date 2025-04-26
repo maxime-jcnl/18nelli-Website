@@ -19,6 +19,10 @@
     transform: translateX(-100%);
   }
 }
+body.no-scroll-page {
+  overflow: hidden !important;
+  height: 100vh;
+}
 
 h1 {
   white-space: nowrap;
@@ -100,6 +104,19 @@ p {
   left: 1000px;
   top: 500px;
   transform: scaleX(-1);
+}
+
+.camera-gif {
+  position: absolute;
+  left: auto;
+  right: 109px;
+  top: auto;
+  bottom: 100px;
+  transform: scaleX(-1);
+  mix-blend-mode: multiply;
+  
+  /* assure-toi que l’élément qui précède soit isolé pour que seul ton GIF blend */
+  isolation: isolate;
 }
 
 body {
@@ -198,7 +215,7 @@ html, body {
   background: #fff;
   font-family: sans-serif;
   will-change: transform;       /* hint au navigateur : je vais bouger en transform */
-
+  pointer-events: auto;
 }
 
 /* barre de titre */
@@ -222,6 +239,7 @@ html, body {
 /* bouton fermer */
 .window .close-btn {
   cursor: pointer;
+  pointer-events: auto;
   font-weight: bold;
 }
 
@@ -231,12 +249,13 @@ html, body {
   width:100%;
   height: auto;
  left: auto;
+ pointer-events: none; 
 }
 
 .window, .window *, .window img {
   user-select: none !important;
   -webkit-user-drag: none !important;
-  pointer-events: none;         /* on rend l’image “invisible” aux events, tout passe dans la fenêtre */
+         /* on rend l’image “invisible” aux events, tout passe dans la fenêtre */
 }
 
 
@@ -252,4 +271,45 @@ html, body {
   display: inline-block;              /* pour que le fond « colle » au texte */
 
   background-color: #000;
+}
+
+.house-link {
+  position: fixed;    /* ou absolute si vous voulez par rapport à un parent positionné */
+  top: 16px;          /* écarte de 16px du haut */
+  right: 130px;        /* écarte de 16px de la droite */
+  z-index: 999;       /* pour qu’elle soit au-dessus de tout */
+}
+
+.house-icon {
+  width: 200px;       /* ou la taille que vous voulez */
+  height: auto;
+  cursor: pointer;
+  display: block;     /* supprime le petit “espace” inline autour de l’image */
+  transition: none;
+  filter: none;
+
+}
+
+.house-link:hover .house-icon {
+  transform: scale(1.1);
+  filter:
+    invert(1)
+    /* contour fin */
+    drop-shadow(0 0 4px rgba(255,255,255,0.8))
+    /* halo plus large */
+    drop-shadow(0 0 12px rgba(255,255,255,0.6));
+    
+}
+
+.p-photo{
+  color: #ff0000;
+  font-size: 20px;
+  font-family: 'Comic Neue', serif;
+  font-weight: bold;
+  font-weight: 700;
+  background-color: #000;
+    /* pour que le fond « colle » au texte */
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
 }
