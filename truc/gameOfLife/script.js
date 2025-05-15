@@ -1,10 +1,13 @@
-const GRID_SIZE = 100;
+const GRID_SIZE = 90;
 let grid = new Map();
 let cellElements = [];
 let intervalId = null;
 let isRunning = false;
 let selectedShip = null;
 let previewCells = [];
+let isMouseDown = false;
+document.body.addEventListener('mousedown', () => { isMouseDown = true; });
+document.body.addEventListener('mouseup',   () => { isMouseDown = false; });
 
 const ships = {
   theAnts: [
@@ -47,7 +50,20 @@ function createGrid() {
         } else {
           previewSimple(row, col);
         }
+      
+        if (isMouseDown) {
+          // while dragging, actually place:
+          if (selectedShip) {
+            placeShip(row, col, selectedShip);
+          } else {
+            // simple draw: turn on the cell
+            grid.set(`${row}:${col}`, 1);
+            cell.classList.add("cell-full");
+            cell.classList.remove("cell-empty");
+          }
+        }
       });
+      
 
       cell.addEventListener("click", function () {
         if (selectedShip) {
