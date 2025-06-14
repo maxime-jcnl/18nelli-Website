@@ -23,11 +23,11 @@ async function loadSounds() {
   audioContext = new (window.AudioContext || window.webkitAudioContext)(); // Initialisation de l'instance d'audiocontexte de l'API web audio
   const soundFiles = {
     // Définition des différents sons par défault
-    kick: "../src/kick.wav",
-    snare: "../src/snare.wav",
-    hats: "../src/hh.wav",
-    perc: "../src/perc.wav",
-    metro: "../src/metro.wav", // Ajouter le fichier de métronome ici
+    kick: "./src/kick.wav",
+    snare: "./src/snare.wav",
+    hats: "./src/hh.wav",
+    perc: "./src/perc.wav",
+    metro: "./src/metro.wav", // Ajouter le fichier de métronome ici
   };
   for (const [key, value] of Object.entries(soundFiles)) {
     // Boucle pour chaque clé/valeur de soundFile
