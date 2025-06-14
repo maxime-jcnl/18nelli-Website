@@ -11,17 +11,25 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Comic+Neue&amp;display=swap"
     />
+    <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <style>
       /* ==== STYLE VISTA ==== */
+      html,
       body {
-        background: url("assets/img/dmontag.png") center/contain no-repeat, #000;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: url("assets/img/bg_music.png") center/contain no-repeat, #000;
         color: #ffffff;
         font-family: "Comic Neue", serif;
         margin: 2rem;
       }
       #mp3-player {
-        max-width: 360px;
+        max-width: 760px;
         margin: auto;
         padding: 1rem;
         background: linear-gradient(to bottom, #ffffff, #ff0000);
@@ -66,13 +74,14 @@
       }
       #visualizer {
         width: 100%;
-        height: 80px;
+        height: 400px;
         background: #000;
         border: 1px solid #000000;
       }
     </style>
   </head>
   <body>
+   
     <div id="mp3-player">
       <h2>ECOUTE EN BOUCLE</h2>
       <ul id="playlist"></ul>
@@ -83,7 +92,10 @@
       </div>
       <canvas id="visualizer"></canvas>
     </div>
-
+ <a href="javascript:history.back()" class="house-link">
+      <img src="assets/img/retour.png" alt="Retour" class="house-icon" />
+    </a>
+    
     <script>
       // —— Import de la liste (100% front)
       async function fetchSongs() {
