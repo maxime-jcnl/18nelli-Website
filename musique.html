@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+  />
+  <title>Lecteur MP3 Old-School</title>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+  <style>
+    /* ==== STYLE VISTA ==== */
+    body {
+      background: url('assets/img/dmontag.png') center/contain no-repeat, #000;
+      color: #444;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 2rem;
+    }
+    #mp3-player {
+      max-width: 360px;
+      margin: auto;
+      padding: 1rem;
+      background: linear-gradient(to bottom, #c0c0c0, #e0e0e0);
+      border: 2px solid #888;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    #mp3-player h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #playlist {
+      list-style: none;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+    #playlist li {
+      padding: 0.4rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    #playlist li:hover,
+    #playlist .active {
+      background: #0078d7;
+      color: white;
+    }
+    #controls {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #controls button {
+      margin: 0 .5rem;
+    }
+    #visualizer {
+      width: 100%;
+      height: 80px;
+      background: #000;
+      border: 1px solid #555;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="mp3-player">
+    <h2>Mon Lecteur MP3</h2>
+    <ul id="playlist"></ul>
+    <div id="controls">
+      <button id="prev" class="btn btn-secondary">◄◄</button>
+      <button id="play" class="btn btn-primary">Play ▶</button>
+      <button id="next" class="btn btn-secondary">►►</button>
+    </div>
+    <canvas id="visualizer"></canvas>
+  </div>
+
+  <script>
+    // 1. Récupère la liste des MP3 dans /song/ (dir listing must be ON)
+    async function fetchSongs() {
+      const res = await fetch('song/');
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return Array.from(doc.querySelectorAll('a'))
+        .map(a => a.getAttribute('href'))
+        .filter(href => href.endsWith('.mp3'));
+    }
+
+    // 2. Variables globales
+    let songs = [], current = 0;
+    let audio, ctx, analyser, dataArray, canvas, canvasCtx;
+
+    // 3. Initialise l’UI et le WebAudio
+    async function init() {
+      songs = await fetchSongs();
+      populatePlaylist();
+      setupAudio();
+      updatePlaylistUI();
+    }
+
+    function populatePlaylist() {
+      const ul = document.getElementById('playlist');
+      songs.forEach((name, i) => {
+        const li = document.createElement('li');
+        li.textContent = name;
+        li.dataset.index = i;
+        li.onclick = () => loadTrack(i);
+        ul.appendChild(li);
+      });
+    }
+
+    function setupAudio() {
+      audio = new Audio();
+      audio.src = `song/${songs[current]}`;
+      audio.crossOrigin = "anonymous";
+
+      // Web Audio API
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = ctx.createAnalyser();
+      const srcNode = ctx.createMediaElementSource(audio);
+      srcNode.connect(analyser);
+      analyser.connect(ctx.destination);
+      analyser.fftSize = 256;
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      // Canvas
+      canvas = document.getElementById('visualizer');
+      canvasCtx = canvas.getContext('2d');
+
+      document.getElementById('play').onclick = togglePlay;
+      document.getElementById('prev').onclick = () => changeTrack(-1);
+      document.getElementById('next').onclick = () => changeTrack(+1);
+      drawVisualizer();
+    }
+
+    function loadTrack(i) {
+      current = i;
+      audio.src = `song/${songs[current]}`;
+      audio.play();
+      document.getElementById('play').textContent = 'Pause ❚❚';
+      updatePlaylistUI();
+    }
+
+    function changeTrack(dir) {
+      current = (current + dir + songs.length) % songs.length;
+      loadTrack(current);
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        this.textContent = 'Pause ❚❚';
+      } else {
+        audio.pause();
+        this.textContent = 'Play ▶';
+      }
+      updatePlaylistUI();
+    }
+
+    function updatePlaylistUI() {
+      document.querySelectorAll('#playlist li').forEach(li => {
+        li.classList.toggle('active', +li.dataset.index === current);
+      });
+    }
+
+    function drawVisualizer() {
+      requestAnimationFrame(drawVisualizer);
+      analyser.getByteFrequencyData(dataArray);
+      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+      const barWidth = canvas.width / dataArray.length * 1.5;
+      let x = 0;
+      dataArray.forEach(v => {
+        const h = v / 2;
+        canvasCtx.fillStyle = 'lime';
+        canvasCtx.fillRect(x, canvas.height - h, barWidth, h);
+        x += barWidth + 1;
+      });
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
