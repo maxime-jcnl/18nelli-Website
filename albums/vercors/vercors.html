@@ -506,5 +506,13 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/camera.js"></script>
+    <script>
+  document.querySelectorAll('#windows-container .window img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      window.open(img.src, '_blank', 'noopener');
+    });
+  });
+</script>
   </body>
 </html>
